@@ -1,0 +1,2 @@
+Please enter data in this format 
+System_name :    , ip : 10.636.21.2, mac : 
