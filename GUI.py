@@ -130,4 +130,7 @@ result_label.pack(padx=20, pady=20)
 
 send_label = tk.Button(root, text="", font=('Arial', 10), command=lambda: None)
 send_label.pack_forget()
-root.mainloop()
+
+if __name__=="__main__":
+    root.mainloop()
+
