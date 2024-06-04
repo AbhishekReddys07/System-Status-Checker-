@@ -1,2 +1,4 @@
-Please enter data in this format 
+Please enter data in this format and erase system _name you can directly enter system name..
 System_name :    , ip : 10.636.21.2, mac : 
+
+ex : my_pc ,ip : 10.636.21.2, mac : fh.fx.dr.bc.12
