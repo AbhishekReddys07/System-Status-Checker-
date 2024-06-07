@@ -6,7 +6,10 @@ from PIL import Image, ImageTk
 import threading
 
 def fireReader(system_name):
-    file_path = "C:/Users/7348913/Desktop/web prj/python/pINGsYSTEM/requrements.txt"
+    """
+    this function opens the file and searches for the Ip address. if needed add BD for fetching IP address 
+    """
+    file_path = "Enter path "
     try:
         with open(file_path, 'r') as f:
             for line in f:
@@ -60,7 +63,7 @@ def send_signal(mac_address):
     root.configure(bg="green")
 
 def sendRestartSignal(ip_address):
-    file_path = "C:/Users/7348913/Desktop/web prj/python/pINGsYSTEM/requrements.txt"
+    file_path = "Enter path here"
     try:
         with open(file_path, 'r') as f:
             for line in f:
