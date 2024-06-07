@@ -2,14 +2,12 @@ import tkinter as tk
 import subprocess
 import platform
 import socket
-from PIL import Image, ImageTk
-import threading
+import time
+import sqlite3
 
 def fireReader(system_name):
-    """
-    this function opens the file and searches for the Ip address. if needed add BD for fetching IP address 
-    """
-    file_path = "Enter path "
+    # File-based data retrieval
+    file_path = "If data file is present please enter file path/location"
     try:
         with open(file_path, 'r') as f:
             for line in f:
@@ -22,6 +20,37 @@ def fireReader(system_name):
         print(f"An error occurred: {e}")
         result_label.config(text=f"An error occurred: {e}", fg="red")
         return None
+    
+    # Database data retrieval If an RDBMS/BD is present, use the code below..
+    try:
+        result_label.config(text="Searching for Ip address",fg="green")
+        time.sleep(2)
+        # configuration is required 
+        conn = sqlite3.connect('your_database_name.db')
+        cursor = conn.cursor()
+
+        query = "SELECT ip_address FROM system_info WHERE system_name = ? OR ip_address = ?"
+        cursor.execute(query, (system_name, system_name))
+        result = cursor.fetchone()
+
+        # Check if a result was found
+        if result:
+            result_label.config(text="Unable to find Ip address please contact your BD Administrator",fg="green")
+            return result[0]
+        else:
+            result_label.config(text="Could not find system Unknown error ", fg="purple")
+            return None
+
+    except sqlite3.Error as e:
+        print(f"Error connecting to the database: {e}")
+        return None
+
+    finally:
+        # Close the cursor and connection
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 def check_device_status(ip_address):
     try:
@@ -63,7 +92,7 @@ def send_signal(mac_address):
     root.configure(bg="green")
 
 def sendRestartSignal(ip_address):
-    file_path = "Enter path here"
+    file_path = "C:/Users/7348913/Desktop/web prj/python/pINGsYSTEM/requrements.txt"
     try:
         with open(file_path, 'r') as f:
             for line in f:
@@ -82,6 +111,40 @@ def sendRestartSignal(ip_address):
         print(f"An error occurred: {e}")
         result_label.config(text=f"An error occurred: {e}", fg="red")
         return None
+    
+    # Database data retrieval
+    try:
+        conn = sqlite3.connect('your_database_name.db')
+        cursor = conn.cursor()
+        query = "SELECT mac_address FROM system_info WHERE ip_address = ?"
+        cursor.execute(query, (ip_address,))
+
+        # Fetching the result
+        result = cursor.fetchone()
+        if result:
+            mac_address = result[0]
+            print("Cleaned MAC Address:", mac_address)
+            send_signal(mac_address)
+            username = username_entry.get()
+            password = password_entry.get()
+            restart_remote_machine(ip_address, username, password)
+            result_label.config(text=f"Signal sent to MAC: {mac_address}", fg="green")
+            return mac_address
+        else:
+            result_label.config(text="IP address not found", fg="purple")
+            return None
+
+    except sqlite3.Error as e:
+        print(f"Error connecting to the database: {e}")
+        result_label.config(text=f"An error occurred: {e}", fg="red")
+        return None
+
+    finally:
+        # Close the cursor and connection
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 def get_ip_from_mac(mac_address):
     result = subprocess.run(['arp', '-a'], capture_output=True, text=True)
