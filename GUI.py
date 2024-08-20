@@ -92,7 +92,7 @@ def send_signal(mac_address):
     root.configure(bg="green")
 
 def sendRestartSignal(ip_address):
-    file_path = "C:/Users/7348913/Desktop/web prj/python/pINGsYSTEM/requrements.txt"
+    file_path = "If data file is present please enter file path/location"
     try:
         with open(file_path, 'r') as f:
             for line in f:
