@@ -1,16 +1,35 @@
-Note: not all the logic and additional functions are integrated, basically it's a baseline code, please check the below content to get an idea/Overview.
+## Wake-on-LAN Automation Tool with GUI
+A user-friendly GUI-based Wake-on-LAN (WoL) automation tool that enables remote system wake-up and restart with real-time status updates.
 
-Key Features:
+**Features**
+Intuitive GUI for easy device selection and control.
+Supports file-based and database-based device information retrieval.
+Displays real-time status updates (online/offline).
+Password protection for remote restarts.
+Uses Wake-on-LAN (WoL) magic packets to power on remote devices.
+Technologies Used
+Python
+Tkinter (GUI)
+SQLite3 (Database interaction)
+subprocess (System commands)
+socket (Network communication)
+Installation & Setup
+1. **Install Dependencies**
+Ensure you have Python installed, then install required dependencies:
+pip install tk sqlite3
+2. **Configure Database (Optional)**
+If using a database, modify GUI.py to connect to the correct SQLite database.
+Update file paths and database configurations as needed.
+3.**Run the Application**
+python GUI.py
+Usage Instructions
+Enter the system name in the input field.
+Click "Check device status" to verify if the device is online or offline.
+If offline, enter username & password, then click "Restart Device" to send a WoL signal.
+Code Structure
+GUI.py → Main Tkinter GUI with system checks and restart functionality.
+Database Integration → Fetches system details if a local database is available.
+WoL Magic Packet → Constructs and sends magic packets to wake devices.
+**Disclaimer**
+This project is for educational and demonstration purposes only. Use with proper authorization before remotely powering on any device.
 
-1. System Status Check: Users can enter the name of the system as wish to manage and check its online/offline status with a single click.
-2. Remote Restart Capability: In case a device is found to be offline, users are prompted to provide their username and password for remote access. They can then initiate a restart operation for the offline device.
-3. Username and Password Protection: To ensure security, the application prompts users to enter their credentials before executing any remote operations.
-4. Error Handling: The application handles errors gracefully, providing informative messages in case of system unavailability or any unexpected issues during the operation.
-Efficient Device Mapping: Device information is stored in a requirements file, allowing for quick and easy retrieval of device details such as IP addresses and MAC addresses.
-5. Feedback Mechanism: Users receive real-time feedback on the status of their actions, with clear indications of whether a device is online/offline and the success of the restart operation.
-
-Requirements:
-   The targeted system should have a power supply continues irrespective of/on. 
-   GUI should be connected to DB or file where data of config is stored.
-   Make sure the device is connected to the Internet explicitly over lan .  
-   
